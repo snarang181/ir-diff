@@ -32,3 +32,7 @@ cmake --build .
 # Custom output name
 ./ir-diff_cli ../samples/old.mlir ../samples/new.mlir ../samples/diff.html
 ```
+
+## Screenshot
+
+![IR Diff Viewer](docs/ir-diff-view.png)
