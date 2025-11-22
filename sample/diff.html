@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>IR Diff: sample/old.mlir vs sample/new.mlir</title>
+
+<style>
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #0b0b0e;
+    color: #f0f0f0;
+    margin: 0;
+    padding: 1rem 1.5rem 3rem;
+}
+h1 {
+    font-size: 1.4rem;
+    margin-bottom: 0.2rem;
+}
+.subtitle {
+    color: #aaaaaa;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+}
+.section {
+    margin-top: 1.5rem;
+}
+.section-header {
+    background: #181822;
+    color: #9cd2ff;
+    padding: 0.4rem 0.6rem;
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.9rem;
+    border-radius: 4px 4px 0 0;
+    border: 1px solid #27273a;
+    border-bottom: none;
+}
+.diff-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.8rem;
+    border: 1px solid #27273a;
+    border-radius: 0 0 4px 4px;
+    overflow: hidden;
+}
+.diff-table thead {
+    background: #151521;
+}
+.diff-table th, .diff-table td {
+    padding: 2px 6px;
+    vertical-align: top;
+    white-space: pre;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.diff-table th {
+    border-bottom: 1px solid #27273a;
+}
+.diff-table .ln {
+    width: 3rem;
+    color: #888;
+    text-align: right;
+    border-right: 1px solid #27273a;
+    background: #111119;
+}
+.diff-table .code {
+    width: 47%;
+}
+tr.equal td.code {
+    background: #101018;
+}
+tr.delete td.code:first-of-type {
+    background: #3a1515;
+}
+tr.insert td.code:last-of-type {
+    background: #123818;
+}
+tr.replace td.code {
+    background: #3a3515;
+}
+tr.delete td.code:first-of-type,
+tr.insert td.code:last-of-type,
+tr.replace td.code {
+    border-left: 2px solid #ff5555;
+}
+tr.insert td.code:last-of-type {
+    border-left-color: #33dd66;
+}
+tr.replace td.code {
+    border-left-color: #e0cc55;
+}
+</style>
+</head>
+<body>
+<h1>IR Diff: sample/old.mlir vs sample/new.mlir</h1>
+<div class="subtitle">IR Diff Viewer</div>
+<div class="section">
+<div class="section-header">(module)</div>
+<table class="diff-table">
+<thead><tr><th class='ln'>#</th><th>Old</th><th class='ln'>#</th><th>New</th></tr></thead><tbody>
+<tr class='equal'><td class='ln'>3</td><td class='code'>module {</td><td class='ln'>3</td><td class='code'>module {</td></tr>
+<tr class='equal'><td class='ln'>5</td><td class='code'>func.func @matmul_naive(%A: memref&lt;4x4xf32&gt;,</td><td class='ln'>5</td><td class='code'>func.func @matmul_naive(%A: memref&lt;4x4xf32&gt;,</td></tr>
+<tr class='equal'><td class='ln'>6</td><td class='code'>%B: memref&lt;4x4xf32&gt;,</td><td class='ln'>6</td><td class='code'>%B: memref&lt;4x4xf32&gt;,</td></tr>
+<tr class='equal'><td class='ln'>7</td><td class='code'>%C: memref&lt;4x4xf32&gt;) {</td><td class='ln'>7</td><td class='code'>%C: memref&lt;4x4xf32&gt;) {</td></tr>
+<tr class='equal'><td class='ln'>8</td><td class='code'>%c0 = arith.constant 0 : index</td><td class='ln'>8</td><td class='code'>%c0 = arith.constant 0 : index</td></tr>
+<tr class='equal'><td class='ln'>9</td><td class='code'>%c4 = arith.constant 4 : index</td><td class='ln'>9</td><td class='code'>%c4 = arith.constant 4 : index</td></tr>
+<tr class='equal'><td class='ln'>10</td><td class='code'>%c1 = arith.constant 1 : index</td><td class='ln'>10</td><td class='code'>%c1 = arith.constant 1 : index</td></tr>
+<tr class='replace'><td class='ln'>11</td><td class='code'>%zero = arith.constant 0.0 : f32</td><td class='ln'>11</td><td class='code'>%one = arith.constant 1.0 : f32</td></tr>
+<tr class='equal'><td class='ln'>14</td><td class='code'>scf.for %i = %c0 to %c4 step %c1 {</td><td class='ln'>14</td><td class='code'>scf.for %i = %c0 to %c4 step %c1 {</td></tr>
+<tr class='equal'><td class='ln'>15</td><td class='code'>scf.for %j = %c0 to %c4 step %c1 {</td><td class='ln'>15</td><td class='code'>scf.for %j = %c0 to %c4 step %c1 {</td></tr>
+<tr class='replace'><td class='ln'>16</td><td class='code'>memref.store %zero, %C[%i, %j] : memref&lt;4x4xf32&gt;</td><td class='ln'>16</td><td class='code'>memref.store %one, %C[%i, %j] : memref&lt;4x4xf32&gt;</td></tr>
+<tr class='equal'><td class='ln'>17</td><td class='code'>}</td><td class='ln'>17</td><td class='code'>}</td></tr>
+<tr class='equal'><td class='ln'>18</td><td class='code'>}</td><td class='ln'>18</td><td class='code'>}</td></tr>
+<tr class='insert'><td class='ln'></td><td class='code'></td><td class='ln'>21</td><td class='code'>%viewA = memref.cast %A : memref&lt;4x4xf32&gt; to memref&lt;4x4xf32&gt;</td></tr>
+<tr class='insert'><td class='ln'></td><td class='code'></td><td class='ln'>22</td><td class='code'>%viewB = memref.cast %B : memref&lt;4x4xf32&gt; to memref&lt;4x4xf32&gt;</td></tr>
+<tr class='insert'><td class='ln'></td><td class='code'></td><td class='ln'>23</td><td class='code'>%viewC = memref.cast %C : memref&lt;4x4xf32&gt; to memref&lt;4x4xf32&gt;</td></tr>
+<tr class='insert'><td class='ln'></td><td class='code'></td><td class='ln'>25</td><td class='code'>linalg.matmul ins(%viewA, %viewB : memref&lt;4x4xf32&gt;, memref&lt;4x4xf32&gt;)</td></tr>
+<tr class='insert'><td class='ln'></td><td class='code'></td><td class='ln'>26</td><td class='code'>outs(%viewC : memref&lt;4x4xf32&gt;)</td></tr>
+<tr class='replace'><td class='ln'>21</td><td class='code'>scf.for %i = %c0 to %c4 step %c1 {</td><td class='ln'>28</td><td class='code'>return</td></tr>
+<tr class='delete'><td class='ln'>22</td><td class='code'>scf.for %j = %c0 to %c4 step %c1 {</td><td class='ln'></td><td class='code'></td></tr>
+<tr class='delete'><td class='ln'>23</td><td class='code'>scf.for %k = %c0 to %c4 step %c1 {</td><td class='ln'></td><td class='code'></td></tr>
+<tr class='delete'><td class='ln'>24</td><td class='code'>%a = memref.load %A[%i, %k] : memref&lt;4x4xf32&gt;</td><td class='ln'></td><td class='code'></td></tr>
+<tr class='delete'><td class='ln'>25</td><td class='code'>%b = memref.load %B[%k, %j] : memref&lt;4x4xf32&gt;</td><td class='ln'></td><td class='code'></td></tr>
+<tr class='delete'><td class='ln'>26</td><td class='code'>%prod = arith.mulf %a, %b : f32</td><td class='ln'></td><td class='code'></td></tr>
+<tr class='delete'><td class='ln'>27</td><td class='code'>%cold = memref.load %C[%i, %j] : memref&lt;4x4xf32&gt;</td><td class='ln'></td><td class='code'></td></tr>
+<tr class='delete'><td class='ln'>28</td><td class='code'>%cnew = arith.addf %cold, %prod : f32</td><td class='ln'></td><td class='code'></td></tr>
+<tr class='delete'><td class='ln'>29</td><td class='code'>memref.store %cnew, %C[%i, %j] : memref&lt;4x4xf32&gt;</td><td class='ln'></td><td class='code'></td></tr>
+<tr class='equal'><td class='ln'>30</td><td class='code'>}</td><td class='ln'>29</td><td class='code'>}</td></tr>
+<tr class='insert'><td class='ln'></td><td class='code'></td><td class='ln'>32</td><td class='code'>func.func @relu(%X: memref&lt;16xf32&gt;, %bias: f32) {</td></tr>
+<tr class='insert'><td class='ln'></td><td class='code'></td><td class='ln'>33</td><td class='code'>%c0 = arith.constant 0 : index</td></tr>
+<tr class='insert'><td class='ln'></td><td class='code'></td><td class='ln'>34</td><td class='code'>%c16 = arith.constant 16 : index</td></tr>
+<tr class='insert'><td class='ln'></td><td class='code'></td><td class='ln'>35</td><td class='code'>%c1 = arith.constant 1 : index</td></tr>
+<tr class='insert'><td class='ln'></td><td class='code'></td><td class='ln'>36</td><td class='code'>%zero = arith.constant 0.0 : f32</td></tr>
+<tr class='insert'><td class='ln'></td><td class='code'></td><td class='ln'>38</td><td class='code'>scf.for %i = %c0 to %c16 step %c1 {</td></tr>
+<tr class='insert'><td class='ln'></td><td class='code'></td><td class='ln'>39</td><td class='code'>%x = memref.load %X[%i] : memref&lt;16xf32&gt;</td></tr>
+<tr class='insert'><td class='ln'></td><td class='code'></td><td class='ln'>40</td><td class='code'>%xb = arith.addf %x, %bias : f32</td></tr>
+<tr class='insert'><td class='ln'></td><td class='code'></td><td class='ln'>41</td><td class='code'>%cmp = arith.cmpf ogt, %xb, %zero : f32</td></tr>
+<tr class='insert'><td class='ln'></td><td class='code'></td><td class='ln'>42</td><td class='code'>%y = arith.select %cmp, %xb, %zero : f32</td></tr>
+<tr class='replace'><td class='ln'>31</td><td class='code'>}</td><td class='ln'>43</td><td class='code'>memref.store %y, %X[%i] : memref&lt;16xf32&gt;</td></tr>
+<tr class='equal'><td class='ln'>32</td><td class='code'>}</td><td class='ln'>44</td><td class='code'>}</td></tr>
+<tr class='equal'><td class='ln'>34</td><td class='code'>return</td><td class='ln'>46</td><td class='code'>return</td></tr>
+<tr class='equal'><td class='ln'>35</td><td class='code'>}</td><td class='ln'>47</td><td class='code'>}</td></tr>
+<tr class='replace'><td class='ln'>38</td><td class='code'>func.func @relu(%X: memref&lt;16xf32&gt;) {</td><td class='ln'>50</td><td class='code'>func.func @scale(%X: memref&lt;16xf32&gt;, %alpha: f32) {</td></tr>
+<tr class='equal'><td class='ln'>39</td><td class='code'>%c0 = arith.constant 0 : index</td><td class='ln'>51</td><td class='code'>%c0 = arith.constant 0 : index</td></tr>
+<tr class='equal'><td class='ln'>40</td><td class='code'>%c16 = arith.constant 16 : index</td><td class='ln'>52</td><td class='code'>%c16 = arith.constant 16 : index</td></tr>
+<tr class='equal'><td class='ln'>41</td><td class='code'>%c1 = arith.constant 1 : index</td><td class='ln'>53</td><td class='code'>%c1 = arith.constant 1 : index</td></tr>
+<tr class='delete'><td class='ln'>42</td><td class='code'>%zero = arith.constant 0.0 : f32</td><td class='ln'></td><td class='code'></td></tr>
+<tr class='equal'><td class='ln'>44</td><td class='code'>scf.for %i = %c0 to %c16 step %c1 {</td><td class='ln'>55</td><td class='code'>scf.for %i = %c0 to %c16 step %c1 {</td></tr>
+<tr class='equal'><td class='ln'>45</td><td class='code'>%x = memref.load %X[%i] : memref&lt;16xf32&gt;</td><td class='ln'>56</td><td class='code'>%x = memref.load %X[%i] : memref&lt;16xf32&gt;</td></tr>
+<tr class='replace'><td class='ln'>46</td><td class='code'>%cmp = arith.cmpf ogt, %x, %zero : f32</td><td class='ln'>57</td><td class='code'>%y = arith.mulf %x, %alpha : f32</td></tr>
+<tr class='delete'><td class='ln'>47</td><td class='code'>%y = arith.select %cmp, %x, %zero : f32</td><td class='ln'></td><td class='code'></td></tr>
+<tr class='equal'><td class='ln'>48</td><td class='code'>memref.store %y, %X[%i] : memref&lt;16xf32&gt;</td><td class='ln'>58</td><td class='code'>memref.store %y, %X[%i] : memref&lt;16xf32&gt;</td></tr>
+<tr class='equal'><td class='ln'>49</td><td class='code'>}</td><td class='ln'>59</td><td class='code'>}</td></tr>
+<tr class='equal'><td class='ln'>51</td><td class='code'>return</td><td class='ln'>61</td><td class='code'>return</td></tr>
+<tr class='equal'><td class='ln'>52</td><td class='code'>}</td><td class='ln'>62</td><td class='code'>}</td></tr>
+<tr class='equal'><td class='ln'>53</td><td class='code'>}</td><td class='ln'>63</td><td class='code'>}</td></tr>
+</tbody></table>
+</div>
+
+</body>
+</html>

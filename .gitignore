@@ -23,7 +23,7 @@
 # Debug files
 *.dSYM/
 # IDE files
-.vscode/
+*.vscode/
 *.code-workspace
 *.idea/
 *.sublime-project
